@@ -1,11 +1,27 @@
 [package]
 name = "rgpio"
-version = "0.1.0"
+authors = ["Thomas Bell <tom.aus@outlook.com>"]
+version = "0.2.0"
 edition = "2021"
+build = "build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+axum = "0.7"
+tower-http = { version = "0.5", features = ["trace"] }
+tokio = { version = "1.36", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+dotenvy = "0.15"
+config = { version = "0.14", features = ["toml", "convert-case"] }
+serde = { version = "1.0", features = ["derive"] }
+anyhow = "1.0"
+built = { version = "0.7", features = ["chrono"] }
+parking_lot = "0.12.1"
+
+[build-dependencies]
+built = { version = "0.7", features = ["chrono", "git2", "semver"] }
 
 [target.'cfg(any(target_arch = "arm", target_arch = "armv7", target_arch="aarch64"))'.dependencies]
-rppal = "0.17.1"
+rppal = "0.17"
