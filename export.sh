@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 mkdir -p /mnt/export
-ls -l /usr/src/target
-ls -l /mnt/export
-cp -rf /usr/src/target /mnt/export
-echo "Copied target to /mnt/export"
+echo "Copying rgpio to /mnt/export..."
+cp -f /usr/src/target/arm-unknown-linux-gnueabihf/release/rgpio /mnt/export/
+echo "Copied rpgio to /mnt/export."
