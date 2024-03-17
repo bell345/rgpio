@@ -3,7 +3,7 @@ Description=RGPIO HTTP server written in Rust
 After=network.target
 
 [Service]
-ExecStart=/srv/http/rgpio/rgpio
+ExecStart=/srv/http/rgpio/rgpio /srv/http/rgpio/rgpio.toml
 Restart=always
 User=net-user
 
