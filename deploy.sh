@@ -9,6 +9,9 @@ DEPLOY_DIR=/srv/http/rgpio
 docker buildx build . -t rgpio_build
 docker run -v ./export:/mnt/export rgpio_build
 
+echo 'Stopping rgpio...'
+ssh "$HOST" 'sudo systemctl stop rgpio'
+
 #rsync -avF --delete . "$HOST:$WORK_DIR"
 scp ./export/rgpio ./rgpio.service ./rgpio.toml "$HOST:$DEPLOY_DIR/"
 
@@ -19,6 +22,6 @@ ssh "$HOST" DEPLOY_DIR=$DEPLOY_DIR 'bash -s' <<'EOF'
     sudo systemctl daemon-reload &&
     echo 'Enabling rgpio...' &&
     sudo systemctl enable rgpio &&
-    echo 'Restarting rgpio...' &&
-    sudo systemctl restart rgpio
+    echo 'Starting rgpio...' &&
+    sudo systemctl start rgpio
 EOF
