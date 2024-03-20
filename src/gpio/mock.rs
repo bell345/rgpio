@@ -34,6 +34,15 @@ impl From<Level> for bool {
     }
 }
 
+impl From<bool> for Level {
+    fn from(value: bool) -> Self {
+        match value {
+            true => Level::High,
+            false => Level::Low
+        }
+    }
+}
+
 impl IGpio for Gpio {
     type Error = Error;
     type Level = Level;

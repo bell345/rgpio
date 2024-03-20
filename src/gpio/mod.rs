@@ -1,6 +1,6 @@
 pub trait IGpio: Sized + Clone {
     type Error: std::error::Error;
-    type Level: Into<bool>;
+    type Level: Into<bool> + From<bool>;
 
     fn new() -> Result<Self, Self::Error>;
     fn get(&mut self, pin: u8) -> Result<Self::Level, Self::Error>;

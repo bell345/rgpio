@@ -1,7 +1,7 @@
 use std::sync::Arc;
 use anyhow::Context;
 use crate::gpio::IGpio;
-use parking_lot::Mutex;
+use tokio::sync::Mutex;
 
 #[derive(Clone, Debug)]
 pub struct AppState {

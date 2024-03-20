@@ -8,6 +8,7 @@ pub struct Config {
     pub host: String,
     pub port: u16,
     pub motd: String,
+    pub max_press_delay_ms: u64
 }
 
 impl Config {

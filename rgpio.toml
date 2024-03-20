@@ -1,3 +1,4 @@
 host = "::"
 port = 8001
 motd = "Hello, world!"
+max_press_delay_ms = 5000
