@@ -20,7 +20,9 @@ RUN apt-get install --yes \
 
 #RUN wget https://github.com/Pro/raspi-toolchain/releases/latest/download/raspi-toolchain
 
-RUN curl -L "https://downloads.sourceforge.net/project/raspberry-pi-cross-compilers/Raspberry%20Pi%20GCC%20Cross-Compiler%20Toolchains/Bullseye/GCC%2010.2.0/Raspberry%20Pi%201%2C%20Zero/cross-gcc-10.2.0-pi_0-1.tar.gz" \
+# original URL:
+# https://downloads.sourceforge.net/project/raspberry-pi-cross-compilers/Raspberry%20Pi%20GCC%20Cross-Compiler%20Toolchains/Bullseye/GCC%2010.2.0/Raspberry%20Pi%201%2C%20Zero/cross-gcc-10.2.0-pi_0-1.tar.gz
+RUN curl -L "https://files.sigptr.me/shared/cross-gcc-10.2.0-debian-11-pi_0-1.tar.gz" \
     | tar xzf - -C /usr/local --strip-components=1
 
 ENV RUST_TARGET=arm-unknown-linux-gnueabihf
@@ -39,8 +41,8 @@ ENV PATH=/root/.cargo/bin:$PATH
 # Install the arm target for Rust.
 RUN rustup target add $RUST_TARGET
 # Configure the linker for the arm target.
-RUN echo "[target.$RUST_TARGET]\n" >> /root/.cargo/config
-RUN echo "linker = \"$GCC_TARGET-gcc\"\n" >> /root/.cargo/config
+RUN echo "[target.$RUST_TARGET]\n" >> /root/.cargo/config.toml
+RUN echo "linker = \"$GCC_TARGET-gcc\"\n" >> /root/.cargo/config.toml
 
 ENV USER=root
 WORKDIR /usr/src

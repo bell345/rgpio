@@ -81,7 +81,7 @@ fn check_pin_range(pin: u8) -> Result<(), ApiError> {
     if pin > 53 {
         return Err(ApiError::BadRequest(format!("Pin number {pin} is out of range")));
     }
-    
+
     Ok(())
 }
 
@@ -130,24 +130,24 @@ async fn press_pin(
     Query(options): Query<PressOptions>
 ) -> Result<(), ApiError> {
     check_pin_range(pin)?;
-    
+
     let delay_ms = options.delay_ms.unwrap_or(200);
     if delay_ms > state.config.max_press_delay_ms {
         return Err(ApiError::BadRequest(
                 format!("Provided delay of {} is greater than max delay {}",
                         delay_ms, state.config.max_press_delay_ms)));
     }
-    
+
     let mut gpio = state.gpio.lock().await;
     gpio.set(pin, true.into())
         .map_err(|e| ApiError::GpioWriteError(pin, e))?;
-    
+
     drop(gpio);
     sleep(Duration::from_millis(delay_ms)).await;
 
     gpio = state.gpio.lock().await;
     gpio.set(pin, false.into())
         .map_err(|e| ApiError::GpioWriteError(pin, e))?;
-    
+
     Ok(())
 }

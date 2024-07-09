@@ -24,9 +24,11 @@ impl IGpio for Gpio {
     }
 
     fn set(&mut self, pin: u8, level: Self::Level) -> Result<(), Self::Error> {
+        let mut out = self.0.get(pin)?.into_output();
+        out.set_reset_on_drop(false);
         match level {
-            Self::Level::High => self.0.get(pin)?.into_output().set_high(),
-            Self::Level::Low => self.0.get(pin)?.into_output().set_low()
+            Self::Level::High => out.set_high(),
+            Self::Level::Low => out.set_low()
         }
         Ok(())
     }
