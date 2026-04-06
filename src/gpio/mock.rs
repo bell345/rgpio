@@ -55,8 +55,8 @@ impl IGpio for Gpio {
         Ok(*self.pin_state.entry(pin).or_insert(Level::Low))
     }
 
-    fn set(&mut self, pin: u8, level: Level) -> Result<(), Error> {
-        self.pin_state.insert(pin, level);
+    fn set(&mut self, pin: u8, level: impl Into<Level>) -> Result<(), Error> {
+        self.pin_state.insert(pin, level.into());
         Ok(())
     }
 }

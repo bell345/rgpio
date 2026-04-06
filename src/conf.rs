@@ -8,7 +8,10 @@ pub struct Config {
     pub host: String,
     pub port: u16,
     pub motd: String,
-    pub max_press_delay_ms: u64
+    pub default_press_delay_ms: u64,
+    pub max_press_delay_ms: u64,
+    pub default_press_interval_ms: u64,
+    pub max_press_interval_ms: u64,
 }
 
 impl Config {
@@ -22,6 +25,10 @@ impl Config {
 
         info!("Using config filename {conf_filename}...");
         let config: Config = config::Config::builder()
+            .set_default("default_press_delay_ms", "200").unwrap()
+            .set_default("max_press_delay_ms", "5000").unwrap()
+            .set_default("default_press_interval_ms", "60000").unwrap()
+            .set_default("max_press_interval_ms", "300000").unwrap()
             .add_source(config::File::with_name(&conf_filename)
                 .format(config::FileFormat::Toml))
             .add_source(config::Environment::with_prefix("RGPIO")
